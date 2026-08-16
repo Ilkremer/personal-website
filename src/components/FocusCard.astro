@@ -1,0 +1,25 @@
+---
+interface Props {
+  item: {
+    title: string;
+    status: string;
+    description: string;
+    tags: string[];
+  };
+}
+
+const { item } = Astro.props;
+---
+
+<article class="focus-card">
+  <div class="focus-card-header">
+    <h3>{item.title}</h3>
+    <span>{item.status}</span>
+  </div>
+
+  <p>{item.description}</p>
+
+  <ul class="tag-list" aria-label={`${item.title} topics`}>
+    {item.tags.map((tag) => <li>{tag}</li>)}
+  </ul>
+</article>

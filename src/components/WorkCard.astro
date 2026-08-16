@@ -1,0 +1,25 @@
+---
+interface Props {
+  item: {
+    title: string;
+    context: string;
+    description: string;
+    tags: string[];
+    note: string;
+  };
+}
+
+const { item } = Astro.props;
+---
+
+<article class="work-card">
+  <p class="eyebrow">{item.context}</p>
+  <h3>{item.title}</h3>
+  <p class="work-description">{item.description}</p>
+
+  <ul class="tag-list" aria-label={`${item.title} skills`}>
+    {item.tags.map((tag) => <li>{tag}</li>)}
+  </ul>
+
+  <p class="work-note">{item.note}</p>
+</article>

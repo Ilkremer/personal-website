@@ -1,0 +1,162 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import ExperienceItem from "../components/ExperienceItem.astro";
+import WorkCard from "../components/WorkCard.astro";
+import FocusCard from "../components/FocusCard.astro";
+import Footer from "../components/Footer.astro";
+import { currentFocus, engineeringWork, experience, site, skillGroups } from "../data/site";
+---
+
+<BaseLayout>
+  <Header />
+
+  <main id="main">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-main">
+          <p class="eyebrow hero-eyebrow">Electrical + Computer Engineering</p>
+          <h1>
+            Isaac Kremer
+          </h1>
+
+          <p class="hero-copy">{site.tagline}</p>
+
+          <div class="hero-actions">
+            <a class="button button-primary" href="#experience">View experience</a>
+            <a class="button button-secondary" href="/resume.pdf" target="_blank" rel="noreferrer">
+              View résumé
+            </a>
+          </div>
+        </div>
+
+        <aside class="hero-aside" aria-label="Engineering profile">
+          <div class="status-line">
+            <span class="status-dot" aria-hidden="true"></span>
+            <span>Electrical & Computer Engineering student</span>
+          </div>
+
+          <dl class="hero-details">
+            <div>
+              <dt>Experience</dt>
+              <dd>Aerospace, electrical systems, manufacturing, troubleshooting</dd>
+            </div>
+            <div>
+              <dt>Current</dt>
+              <dd>Developing FPGA / RTL and embedded-systems skills</dd>
+            </div>
+            <div>
+              <dt>Approach</dt>
+              <dd>Hands-on work backed by system-level understanding</dd>
+            </div>
+          </dl>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="experience">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Professional background</p>
+            <h2>Experience</h2>
+          </div>
+          <p>
+            Applied work across aerospace, manufacturing, electrical systems, and technical environments.
+          </p>
+        </div>
+
+        <div class="experience-list">
+          {experience.map((item) => <ExperienceItem item={item} />)}
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="work">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Selected engineering work</p>
+            <h2>Work worth discussing.</h2>
+          </div>
+        </div>
+
+        <div class="work-grid">
+          {engineeringWork.map((item) => <WorkCard item={item} />)}
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-focus" id="current-focus">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Currently exploring</p>
+            <h2>What I’m building toward.</h2>
+          </div>
+        </div>
+
+        <div class="focus-grid">
+          {currentFocus.map((item) => <FocusCard item={item} />)}
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container about-grid">
+        <div>
+          <p class="eyebrow">About</p>
+          <h2>Interested in the boundary between hardware and software.</h2>
+        </div>
+
+        <div class="about-copy">
+          <p>
+            I’m an Electrical & Computer Engineering student with a hands-on background in aerospace electrical systems,
+            manufacturing equipment, wiring and harnessing, prototyping, and troubleshooting.
+          </p>
+
+          <p>
+            I’m currently expanding that foundation into embedded systems and digital hardware. My goal is to build enough
+            depth in FPGA, RTL, and embedded design that future portfolio projects can demonstrate complete engineering
+            decisions—from requirements and architecture through implementation and verification.
+          </p>
+        </div>
+      </div>
+
+      <div class="container skill-grid">
+        {skillGroups.map((group) => (
+          <section class="skill-group">
+            <h3>{group.title}</h3>
+            <ul>
+              {group.items.map((item) => <li>{item}</li>)}
+            </ul>
+          </section>
+        ))}
+      </div>
+    </section>
+
+    <section class="contact-section" id="contact">
+      <div class="container contact-grid">
+        <div>
+          <p class="eyebrow">Contact</p>
+          <h2>Interested in technical work with real hardware?</h2>
+        </div>
+
+        <div class="contact-copy">
+          <p>
+            I’m interested in internships, research, and engineering work involving electrical systems, embedded hardware,
+            digital systems, aerospace, and adjacent technical fields.
+          </p>
+          <div class="contact-actions">
+            <a class="button button-light" href={`mailto:${site.email}`}>Email me</a>
+            <a class="text-link text-link-light" href={site.linkedin} target="_blank" rel="noreferrer">
+              LinkedIn <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,21 @@
+---
+import { nav, site } from "../data/site";
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="/" aria-label={`${site.shortName} home`}>
+      <span class="brand-mark" aria-hidden="true">I</span>
+      <span>{site.shortName}</span>
+    </a>
+
+    <nav class="nav" aria-label="Primary navigation">
+      {nav.map((item) => (
+        <a href={item.href}>{item.label}</a>
+      ))}
+      <a class="nav-resume" href="/resume.pdf" target="_blank" rel="noreferrer">
+        Résumé
+      </a>
+    </nav>
+  </div>
+</header>
