@@ -854,6 +854,10 @@ pre {
   gap: 1.2rem;
 }
 
+.focus-card:only-child {
+  grid-column: 1 / -1;
+}
+
 .focus-card {
   padding: 1.7rem;
   border: 1px solid #3a3d38;

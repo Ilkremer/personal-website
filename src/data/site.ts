@@ -75,18 +75,11 @@ export const engineeringWork = [
 
 export const currentFocus = [
   {
-    title: "FPGA & Digital Hardware",
-    status: "Early-stage learning",
+    title: "Unix Compute Cluster",
+    status: "Primary focus · In progress",
     description:
-      "Building fundamentals in synchronous digital logic, RTL design, SystemVerilog, simulation, and FPGA development through progressively larger exercises and projects.",
-    tags: ["SystemVerilog", "RTL", "Digital Logic", "FPGA"],
-  },
-  {
-    title: "ESP32 Smart Thermostat",
-    status: "Planning / early development",
-    description:
-      "Planning an ESP32-based thermostat as a longer-term embedded systems project involving sensing, local controls, relay outputs, an OLED interface, and Home Assistant integration.",
-    tags: ["ESP32-C6", "Embedded Systems", "Electronics", "Home Assistant"],
+      "Building a small Linux compute cluster from repurposed desktop hardware to develop practical experience with system administration, networking, and distributed computing. Current work centers on the cluster hardware and network setup, with node automation, SLURM scheduling, MPI applications, and benchmarking planned next.",
+    tags: ["Debian Linux", "Networking", "Cluster Management", "Distributed Computing"],
   },
 ];
 

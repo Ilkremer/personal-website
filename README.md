@@ -197,13 +197,12 @@ Changes pushed to `main` are automatically rebuilt and deployed.
 
 The portfolio itself is an ongoing project.
 
-Current and planned additions include documenting more complete technical projects as I develop greater depth in:
+My current project focus is the [Unix Compute Cluster](https://github.com/Ilkremer/unix-compute-cluster), a small Linux cluster built from repurposed desktop hardware. Current work centers on hardware and networking, with planned work in:
 
-- FPGA and RTL design
-- Embedded systems
-- Digital hardware
-- Computer architecture
-- Hardware-software integration
+- Linux administration and node automation
+- SLURM workload scheduling
+- MPI-based parallel applications
+- Distributed performance benchmarking
 
 The goal is for future project pages to document not only final results, but also engineering requirements, architecture, implementation, testing, verification, and design decisions.
 
