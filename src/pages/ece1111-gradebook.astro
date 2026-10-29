@@ -12,6 +12,7 @@
 </head>
 <body>
   <main class="shell">
+    <p class="creator-note">Want to learn about the cool guy who made this site? <a href="/">Check out Isaac’s website <span aria-hidden="true">→</span></a></p>
     <header class="topbar">
       <div>
         <p class="eyebrow">ECE 1111 · FALL 2026</p>
@@ -560,6 +561,10 @@
     button, input { font: inherit; }
     button { color: inherit; }
     .shell { width: min(1480px, 100%); margin: 0 auto; padding: 30px 32px 56px; }
+    .creator-note { margin: 0 0 24px; padding: 14px 18px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); color: var(--muted); font-size: .9rem; line-height: 1.6; }
+    .creator-note a { color: var(--cherry); font-weight: 750; text-underline-offset: 3px; }
+    .creator-note a:hover { color: var(--cherry-dark); }
+    .creator-note a:focus-visible { outline: 2px solid var(--cherry); outline-offset: 4px; }
     .topbar { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 28px; }
     .eyebrow { margin: 0 0 6px; color: var(--cherry); font-size: 0.75rem; font-weight: 800; letter-spacing: 0.13em; }
     h1, h2, h3, p { margin-top: 0; }
