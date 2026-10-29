@@ -82,11 +82,11 @@ export const currentFocus = [
     tags: ["Debian Linux", "Networking", "Cluster Management", "Distributed Computing"],
   },
   {
-    title: "ECE 1111 · Programming & Embedded Systems",
+    title: "ECE 1111 · Engineering Computation",
     status: "Coursework · In progress",
     description:
-      "Developing C/C++ and Python fundamentals through ECE 1111 assignments and labs, including Unix command-line workflows, Makefile builds, standard input/output, and input validation. Arduino and micro:bit exercises in Tinkercad connect programming to analog temperature sensing and LED control. Recent work focuses on streaming sensor data, serial plotting, and introductory discrete Fourier transforms—learning how sampling and frequency bins relate to a signal.",
-    tags: ["C/C++ & Python", "Unix & Makefiles", "Arduino & micro:bit", "Sensor Interfacing", "Signal Processing Basics"],
+      "Building a foundation in engineering computation through UNIX/Linux, Bash scripting, Python, C/C++, and microcontroller programming. Coursework has progressed from programming environments and basic algorithms to understanding program execution, memory, and modular software design. Applying these concepts to introductory numerical computation, signal processing, and hardware interfacing while developing the skills to build, test, and maintain software for computational problems and physical systems.",
+    tags: ["UNIX/Linux & Bash", "Python & C/C++", "Microcontrollers", "Numerical Computation", "Signal Processing"],
   },
 ];
 
