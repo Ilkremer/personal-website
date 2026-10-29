@@ -5,6 +5,11 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# Keep successive updates from deploying over one another.
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
 permissions:
   contents: read
   pages: write
