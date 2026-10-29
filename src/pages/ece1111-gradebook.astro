@@ -19,10 +19,14 @@
       </div>
       <div class="top-actions">
         <span id="save-status" class="save-status" aria-live="polite">Saved locally</span>
+        <button id="export-button" class="button button-quiet" type="button">Download backup</button>
+        <button id="import-button" class="button button-quiet" type="button">Restore backup</button>
+        <input id="backup-file" type="file" accept=".json,application/json" hidden />
         <button id="reset-button" class="button button-quiet" type="button">Reset all</button>
       </div>
     </header>
 
+    <p id="backup-status" role="status" aria-live="polite"></p>
     <div class="dashboard">
       <aside class="summary-panel" aria-label="Grade summary">
         <section class="grade-hero">
@@ -439,6 +443,79 @@
       });
 
 
+
+      function validateBackup(backup) {
+        if (!backup || backup.app !== "ece1111-gradebook" || backup.version !== 1)
+          throw new Error("Choose a supported ECE 1111 Gradebook backup.");
+        var data = backup.data;
+        if (!data || !data.categories || !Array.isArray(data.extra))
+          throw new Error("The backup is incomplete. Your grades have not changed.");
+        function validText(value) { return typeof value === "string"; }
+        function validScore(value, positive) {
+          return value === "" || ((typeof value === "string" || typeof value === "number") &&
+            String(value).trim() !== "" && Number.isFinite(Number(value)) &&
+            (positive ? Number(value) > 0 : Number(value) >= 0));
+        }
+        categoryDefinitions.forEach(function (category) {
+          var rows = data.categories[category.id];
+          if (!Array.isArray(rows) || !rows.length || (!category.multiple && rows.length !== 1))
+            throw new Error("The backup has invalid categories. Your grades have not changed.");
+          rows.forEach(function (row) {
+            if (!row || !validText(row.name) || !validScore(row.earned, false) || !validScore(row.possible, true))
+              throw new Error("The backup contains invalid scores. Your grades have not changed.");
+          });
+        });
+        data.extra.forEach(function (row) {
+          if (!row || !validText(row.name) || !validScore(row.points, false))
+            throw new Error("The backup contains invalid extra credit. Your grades have not changed.");
+        });
+        var result = safeState(data);
+        categoryDefinitions.forEach(function (category) {
+          result.categories[category.id].forEach(function (row) { row.id = makeId(); });
+        });
+        result.extra.forEach(function (row) { row.id = makeId(); });
+        return result;
+      }
+
+      var backupStatus = document.getElementById("backup-status");
+      document.getElementById("export-button").addEventListener("click", function () {
+        var backup = { app: "ece1111-gradebook", version: 1, exportedAt: new Date().toISOString(), data: state };
+        var url = URL.createObjectURL(new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" }));
+        var link = document.createElement("a");
+        link.href = url;
+        link.download = "ece1111-gradebook-" + new Date().toISOString().slice(0, 10) + ".json";
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setTimeout(function () { URL.revokeObjectURL(url); }, 10000);
+        backupStatus.textContent = "Backup download started. Your grades are unchanged.";
+      });
+      var backupFile = document.getElementById("backup-file");
+      document.getElementById("import-button").addEventListener("click", function () {
+        backupFile.value = "";
+        backupFile.click();
+      });
+      backupFile.addEventListener("change", async function () {
+        var file = backupFile.files[0];
+        if (!file) return;
+        try {
+          if (file.size > 5 * 1024 * 1024) throw new Error("This file is too large. Choose a gradebook JSON backup under 5 MB.");
+          var restored = validateBackup(JSON.parse(await file.text()));
+          if (!window.confirm("Replace this browser's current grades with this backup? Download a backup of your current grades first if you want to keep them.")) {
+            backupStatus.textContent = "Restore canceled. Your grades are unchanged.";
+            return;
+          }
+          // Persist successfully before replacing the visible state.
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(restored));
+          state = restored;
+          renderCategories();
+          updateSummary();
+          backupStatus.textContent = "Backup restored and saved in this browser.";
+        } catch (error) {
+          backupStatus.textContent = "Could not restore backup: " + error.message;
+        }
+      });
+
       var resetDialog = document.getElementById("reset-dialog");
       document.getElementById("reset-button").addEventListener("click", function () {
         if (typeof resetDialog.showModal === "function") resetDialog.showModal();
@@ -489,7 +566,7 @@
     h1 { margin-bottom: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(2.25rem, 4vw, 4rem); line-height: 0.95; letter-spacing: -0.035em; }
     h2 { margin-bottom: 0; font-family: Georgia, "Times New Roman", serif; font-size: 1.45rem; letter-spacing: -0.02em; }
     h3 { margin-bottom: 4px; font-size: 1rem; line-height: 1.25; }
-    .top-actions { display: flex; align-items: center; gap: 14px; }
+    .top-actions { flex-wrap: wrap; justify-content: flex-end; display: flex; align-items: center; gap: 14px; }
     .save-status { color: var(--muted); font-size: 0.875rem; transition: color .2s ease; }
     .save-status::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 7px; border-radius: 50%; background: #a8a4ab; }
     .save-status.just-saved { color: #26755f; }
@@ -644,3 +721,4 @@
   </style>
 </body>
 </html>
+
